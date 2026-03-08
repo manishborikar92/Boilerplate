@@ -1,0 +1,28 @@
+{
+  "name": "email-module",
+  "version": "1.0.0",
+  "description": "Standalone, provider-agnostic email module with responsive templates, notification dispatcher, and middleware.",
+  "main": "index.js",
+  "scripts": {
+    "test:integration": "node test-integration.js"
+  },
+  "dependencies": {
+    "nodemailer": "^6.10.1"
+  },
+  "optionalDependencies": {
+    "@getbrevo/brevo": "^2.0.0",
+    "mailersend": "^2.0.0",
+    "resend": "^3.0.0"
+  },
+  "keywords": [
+    "email",
+    "smtp",
+    "nodemailer",
+    "resend",
+    "brevo",
+    "mailersend",
+    "templates",
+    "notifications"
+  ],
+  "license": "MIT"
+}
