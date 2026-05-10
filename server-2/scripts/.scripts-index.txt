@@ -1,0 +1,32 @@
+CA-FLOW SERVER SCRIPTS DIRECTORY
+=================================
+
+📁 Total Files: 11 (9 scripts + 2 docs)
+
+⭐ PRODUCTION SCRIPTS (5)
+├── create_razorpay_plans.js      - Create Razorpay plans & update .env
+├── seed-subscription-plans.js    - Seed database with subscription plans
+├── fix-customer-ids.js           - Fix invalid Razorpay customer IDs
+├── generate-jwt-secrets.js       - Generate secure JWT secrets
+└── migrate-to-production.js      - Migrate test to production database
+
+🧪 TESTING SCRIPTS (3)
+├── test-subscription-flow.js     - Verify subscription configuration
+├── test-razorpay-integration.js  - Test Razorpay API integration
+└── test-email-integration.js     - Test email service integration
+
+🧹 MAINTENANCE SCRIPTS (1)
+└── cleanup-razorpay-plans.js     - Identify old/test Razorpay plans
+
+📚 DOCUMENTATION (2)
+└── README.md                     - Comprehensive scripts documentation
+
+QUICK START
+===========
+1. node scripts/create_razorpay_plans.js
+2. node scripts/seed-subscription-plans.js
+3. node scripts/test-subscription-flow.js
+
+For detailed usage, see: scripts/README.md
+
+Last Updated: January 31, 2026

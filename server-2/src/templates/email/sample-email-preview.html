@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CA-Flow Email Notification Samples</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f3f4f6;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #111827;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .card h2 {
+      color: #2563eb;
+      font-size: 18px;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    .card p {
+      color: #6b7280;
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+    .badge-urgent {
+      background-color: #dc2626;
+      color: white;
+    }
+    .badge-high {
+      background-color: #ea580c;
+      color: white;
+    }
+    .badge-normal {
+      background-color: #2563eb;
+      color: white;
+    }
+    .badge-low {
+      background-color: #6b7280;
+      color: white;
+    }
+    .features {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #e5e7eb;
+    }
+    .features ul {
+      margin: 5px 0;
+      padding-left: 20px;
+    }
+    .features li {
+      color: #4b5563;
+      font-size: 13px;
+      margin: 5px 0;
+    }
+    .note {
+      background-color: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+    .note p {
+      color: #92400e;
+      margin: 0;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📧 CA-Flow Email Notification Samples</h1>
+    
+    <div class="note">
+      <p><strong>Note:</strong> These are visual representations of the email templates. Actual emails are sent using HTML email standards with inline CSS for maximum compatibility across email clients.</p>
+    </div>
+
+    <div class="grid">
+      <!-- Payment Notification -->
+      <div class="card">
+        <h2>💰 Payment Notification</h2>
+        <p>Sent when a client makes a payment or when payment fails.</p>
+        <span class="badge badge-high">High Priority</span>
+        <div class="features">
+          <strong>Features:</strong>
+          <ul>
+            <li>Amount display with ₹ formatting</li>
+            <li>Client name</li>
+            <li>Status badge (success/failure)</li>
+            <li>Color-coded based on status</li>
+            <li>Action button to view details</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Thread Created -->
+      <div class="card">
+        <h2>💬 New Conversation</h2>
+        <p>Sent when a new conversation thread is created.</p>
+        <span class="badge badge-normal">Normal Priority</span>
+        <div class="features">
+          <strong>Features:</strong>
+          <ul>
+            <li>Conversation subject</li>
+            <li>Sender information</li>
+            <li>Icon-based indicators</li>
+            <li>Action button to view conversation</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Thread Message -->
+      <div class="card">
+        <h2>📨 New Message</h2>
+        <p>Sent when a new message is received in a conversation.</p>
+        <span class="badge badge-normal">Normal Priority</span>
+        <div class="features">
+          <strong>Features:</strong>
+          <ul>
+            <li>Conversation subject</li>
+            <li>Sender information</li>
+            <li>Message preview</li>
+            <li>Action button to view message</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Document Upload -->
+      <div class="card">
+        <h2>📄 Document Uploaded</h2>
+        <p>Sent when documents are uploaded in a conversation.</p>
+        <span class="badge badge-low">Low Priority (No Email)</span>
+        <div class="features">
+          <strong>Features:</strong>
+          <ul>
+            <li>Document name or count</li>
+            <li>Uploader information</li>
+            <li>Visual document icon</li>
+            <li>Action button to view documents</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Subscription Activated -->
+      <div class="card">
+        <h2>✅ Subscription Activated</h2>
+        <p>Sent when a subscription is successfully activated.</p>
+        <span class="badge badge-high">High Priority</span>
+        <div class="features">
+          <strong>Features:</strong>
+          <ul>
+            <li>Plan name</li>
+            <li>Amount and billing info</li>
+            <li>Next billing date</li>
+            <li>Action button to view subscription</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Subscription Failed -->
+      <div class="card">
+        <h2>❌ Subscription Payment Failed</h2>
+        <p>Sent when subscription payment fails.</p>
+        <span class="badge badge-urgent">Urgent Priority</span>
+        <div class="features">
+          <strong>Features:</strong>
+          <ul>
+            <li>Plan name</li>
+            <li>Amount information</li>
+            <li>Urgent styling</li>
+            <li>Action button to update payment</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Client First Login -->
+      <div class="card">
+        <h2>🎉 Client First Login</h2>
+        <p>Sent when a client logs in for the first time.</p>
+        <span class="badge badge-normal">Normal Priority</span>
+        <div class="features">
+          <strong>Features:</strong>
+          <ul>
+            <li>Client name</li>
+            <li>Login timestamp</li>
+            <li>Celebration styling</li>
+            <li>Action button to view client</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Client Login -->
+      <div class="card">
+        <h2>👤 Client Login</h2>
+        <p>Sent when a client logs in (regular).</p>
+        <span class="badge badge-low">Low Priority (No Email)</span>
+        <div class="features">
+          <strong>Features:</strong>
+          <ul>
+            <li>Client name</li>
+            <li>Login timestamp</li>
+            <li>Simple notification</li>
+            <li>Action button to view client</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <p><strong>Email Priority Rules:</strong> Emails are automatically sent for Urgent, High, and Normal priority notifications. Low priority notifications do not trigger emails to reduce inbox clutter.</p>
+    </div>
+
+    <h2 style="color: #111827; margin-top: 40px;">📱 Responsive Design</h2>
+    <div class="card">
+      <p>All email templates are fully responsive and tested on:</p>
+      <div class="features">
+        <ul>
+          <li><strong>Desktop:</strong> Gmail, Outlook, Apple Mail, Thunderbird</li>
+          <li><strong>Mobile:</strong> Gmail (iOS/Android), Apple Mail (iOS), Outlook (iOS/Android)</li>
+          <li><strong>Webmail:</strong> Gmail, Outlook.com, Yahoo Mail, ProtonMail</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 style="color: #111827; margin-top: 40px;">🎨 Design Features</h2>
+    <div class="grid">
+      <div class="card">
+        <h2>Priority-Based Styling</h2>
+        <p>Each priority level has unique colors and badges:</p>
+        <div style="margin-top: 10px;">
+          <span class="badge badge-urgent">🚨 Urgent</span>
+          <span class="badge badge-high">⚠️ High</span>
+          <span class="badge badge-normal">Normal</span>
+          <span class="badge badge-low">Low</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Consistent Branding</h2>
+        <p>All emails feature:</p>
+        <div class="features">
+          <ul>
+            <li>CA-Flow logo and branding</li>
+            <li>Professional color scheme</li>
+            <li>Clean, modern design</li>
+            <li>Trust-building elements</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Accessibility</h2>
+        <p>Designed for everyone:</p>
+        <div class="features">
+          <ul>
+            <li>Semantic HTML structure</li>
+            <li>High contrast colors</li>
+            <li>Screen reader friendly</li>
+            <li>Alt text for images</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin: 40px 0; padding: 20px; background: white; border-radius: 8px;">
+      <p style="color: #6b7280; margin: 0;">
+        <strong>Status:</strong> ✅ Production Ready | 
+        <strong>Version:</strong> 1.0 | 
+        <strong>Last Updated:</strong> January 27, 2026
+      </p>
+    </div>
+  </div>
+</body>
+</html>
