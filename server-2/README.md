@@ -1,85 +1,108 @@
-# server-2
+# Server Boilerplate
 
-`server-2` is a clean Express starter for production APIs. It keeps the request path simple (`route -> controller -> service`) and ships with validated environment config, structured JSON logging, centralized error handling, request validation, and health endpoints out of the box.
+A robust, production-ready Node.js + Express.js starter kit. This repository provides a solid foundation for building secure, scalable backend applications with built-in best practices.
 
-## Requirements
+**Use this as a starting point for your new projects.**
 
-- Node.js 22+
-- npm 10+
+## 🚀 Features
 
-## Quick Start
+- **Authentication**: JWT-based auth (Access/Refresh tokens), Session Management, Google OAuth.
+- **Security**: Helmet, CORS, Rate Limiting, Sanitization (NoSQL/XSS), Parameter Pollution protection.
+- **Database**: MongoDB integration with Mongoose.
+- **File Handling**: Professional upload system (Multer + Cloudinary) with validation.
+- **Email Service**: Template-based emails using Nodemailer.
+- **DevOps**: Docker & Docker Compose setup.
+- **Structure**: Modular architecture (Controllers, Services, Routes, Utils).
+- **Testing**: Jest infrastructure ready.
 
-1. Install dependencies:
+## 🛠️ Getting Started
 
-   ```bash
-   npm install
-   ```
+### 1. Clone & Setup
 
-2. Copy the example environment file:
+To use this boilerplate for a new project, simply copy the files or clone the repo:
 
-   ```bash
-   cp .env.example .env
-   ```
+```bash
+# Clone the repository
+git clone <repo-url> my-new-project
 
-3. Start the development server:
+# Navigate into the directory
+cd my-new-project
 
-   ```bash
-   npm run dev
-   ```
-
-4. Verify the app:
-
-   ```bash
-   curl "http://localhost:4000/api/v1/health?details=true"
-   ```
-
-## Available Scripts
-
-- `npm run dev` - start the server with hot reload
-- `npm start` - start the server in normal mode
-- `npm run lint` - run ESLint
-
-## Environment Variables
-
-- `NODE_ENV` - `development`, `test`, or `production`
-- `PORT` - HTTP port
-- `API_PREFIX` - API namespace prefix
-- `APP_NAME` - service name shown in logs and health responses
-- `APP_VERSION` - service version shown in health responses
-- `LOG_LEVEL` - `debug`, `info`, `warn`, `error`, or `fatal`
-- `CORS_ORIGINS` - comma-separated allowlist; leave empty to allow all origins
-- `JSON_BODY_LIMIT` - maximum JSON payload size for incoming requests
-- `TRUST_PROXY` - Express `trust proxy` value
-- `HEALTH_DETAILS_ENABLED` - allow runtime details in health responses
-
-## Endpoints
-
-- `GET /api/v1/health`
-- `GET /api/v1/health/live`
-- `GET /api/v1/health/ready`
-
-`GET /api/v1/health` and `GET /api/v1/health/ready` support `?details=true`.
-
-## Project Structure
-
-```text
-server-2/
-  src/
-    config/
-    controllers/
-    middlewares/
-    routes/
-    services/
-    utils/
-    validators/
+# Install dependencies
+npm install
 ```
 
-## Extending The Starter
+### 2. Configure Environment
 
-1. Add a validator in `src/validators`
-2. Add a service in `src/services`
-3. Add a controller in `src/controllers`
-4. Register a route in `src/routes`
-5. Mount the route from `src/routes/index.js`
+Create a `.env` file in the root directory and copy the contents from `.env.example`.
 
-This starter intentionally does not choose a database, ORM, auth provider, queue, or storage vendor. Add those only when your project needs them.
+```bash
+cp .env.example .env
+```
+
+**Required Configuration:**
+- `MONGODB_URI`: Connection string for your MongoDB database.
+- `JWT_SECRET` / `JWT_REFRESH_SECRET`: Secure random strings for token signing.
+- `SMTP_*`: Your email provider credentials (for sending emails).
+- `CLOUDINARY_*`: Your Cloudinary credentials (for file uploads).
+
+### 3. Run the Server
+
+**Development Mode:**
+Running with `nodemon` for hot-reloading:
+```bash
+npm run dev
+```
+
+**Production Mode:**
+```bash
+npm start
+```
+
+**Using Docker:**
+```bash
+docker-compose up -d --build
+```
+
+## 📂 Project Structure
+
+```
+src/
+├── config/         # Configuration (DB, Cloudinary, Firebase, Uploads)
+├── controllers/    # Request handlers (Auth, Files, etc.)
+├── middleware/     # Custom middleware (Auth, Logger, Validation, Security)
+├── models/         # Mongoose schemas (User, Session)
+├── routes/         # API Route definitions
+├── services/       # Business logic (Email, Files)
+├── utils/          # Helpers (Error Classes, JWT, Sanitization)
+├── app.js          # Express application setup
+└── server.js       # Server entry point
+tests/              # Unit & Integration tests
+scripts/            # Utility scripts
+```
+
+## 🔒 Security Features
+
+This boilerplate comes pre-configured with industry-standard security practices:
+- **Helmet**: Sets secure HTTP headers.
+- **CORS**: Configured interactions between client/server.
+- **Rate Limit**: Prevents brute-force attacks.
+- **Mongo Sanitize**: Prevents NoSQL injection.
+- **XSS Clean**: Sanitizes user input against XSS.
+- **HPP**: Protects against HTTP Parameter Pollution.
+
+## 🧪 Testing
+
+The project is set up with **Jest**.
+
+```bash
+# Run all tests
+npm test
+
+# Run specific test file
+npm test tests/integration/health.test.js
+```
+
+## 📝 License
+
+ISC

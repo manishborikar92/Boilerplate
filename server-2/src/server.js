@@ -1,65 +1,109 @@
-import createApp from './app.js';
-import env from './config/env.js';
-import logger from './utils/logger.js';
+const mongoose = require('mongoose');
+require('dotenv').config({ quiet: true });
 
-const app = createApp();
-const server = app.listen(env.port, () => {
-  logger.info('server.started', {
-    appName: env.appName,
-    environment: env.nodeEnv,
-    port: env.port,
-    apiPrefix: env.apiPrefix,
-  });
-});
+const app = require('./app');
+const { initializeFirebase } = require('./config/firebase');
+const { initializeCloudinary } = require('./config/cloudinary');
+const connectDB = require('./config/db');
+const { logger } = require('./middleware/logger');
+const { stopCleanup } = require('./utils/tokenBlacklist');
 
-let isShuttingDown = false;
+// Styled console output
+let boxen, chalk;
+(async () => {
+    boxen = (await import('boxen')).default;
+    chalk = (await import('chalk')).default;
+})();
 
-const shutdown = (signal, error) => {
-  if (isShuttingDown) {
-    return;
-  }
+// Suppress mongoose deprecation warnings
+mongoose.set('strictQuery', true);
 
-  isShuttingDown = true;
+// Initialize Firebase
+initializeFirebase();
 
-  const timeout = setTimeout(() => {
-    logger.error('server.shutdown.forced', { signal });
-    process.exit(1);
-  }, 10_000);
+// Initialize Cloudinary
+initializeCloudinary();
 
-  timeout.unref();
+// Connect to database
+connectDB();
 
-  if (error) {
-    logger.fatal('server.shutdown.error', {
-      signal,
-      error,
-    });
-  } else {
-    logger.info('server.shutdown.requested', { signal });
-  }
-
-  server.close((closeError) => {
-    if (closeError) {
-      logger.error('server.shutdown.failed', {
-        signal,
-        error: closeError,
-      });
-      process.exit(1);
-      return;
+// Start Server
+const PORT = process.env.PORT || 5000;
+const server = app.listen(PORT, async () => {
+    // Wait for dynamic imports
+    if (!boxen || !chalk) {
+        boxen = (await import('boxen')).default;
+        chalk = (await import('chalk')).default;
     }
 
-    logger.info('server.shutdown.complete', { signal });
-    process.exit(error ? 1 : 0);
-  });
+    const serverInfo = [
+        `${chalk.bold.cyan('Reusable Server Boilerplate')}`,
+        '',
+        `${chalk.green('🚀 Server:')}      ${chalk.white.underline(`http://localhost:${PORT}`)}`,
+        `${chalk.blue('📍 Environment:')} ${chalk.yellow(process.env.NODE_ENV || 'development')}`,
+        `${chalk.magenta('🔐 Auth:')}        ${chalk.gray('JWT with token rotation')}`,
+    ].join('\n');
+
+    console.log(
+        boxen(serverInfo, {
+            padding: 1,
+            margin: 1,
+            borderStyle: 'round',
+            borderColor: 'cyan',
+            title: '✨ Server Ready',
+            titleAlignment: 'center'
+        })
+    );
+
+    logger.info(`Server started on port ${PORT}`);
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (err) => {
+    logger.error('UNHANDLED REJECTION! Shutting down...', { error: err.message, stack: err.stack });
+
+    // Close server & exit process
+    server.close(() => {
+        process.exit(1);
+    });
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (err) => {
+    logger.error('UNCAUGHT EXCEPTION! Shutting down...', { error: err.message, stack: err.stack });
+
+    // Exit immediately for uncaught exceptions
+    process.exit(1);
+});
+
+// Graceful shutdown
+const gracefulShutdown = (signal) => {
+    logger.info(`${signal} received, shutting down gracefully`);
+
+    // Stop token blacklist cleanup interval
+    stopCleanup();
+
+    server.close(async () => {
+        logger.info('HTTP server closed');
+        try {
+            // Remove disconnected listener to avoid warning during intentional shutdown
+            mongoose.connection.removeAllListeners('disconnected');
+            await mongoose.connection.close(false);
+            logger.info('MongoDB connection closed');
+            logger.info('Graceful shutdown complete');
+            process.exit(0);
+        } catch (err) {
+            logger.error('Error during shutdown', { error: err.message });
+            process.exit(1);
+        }
+    });
+
+    // Force exit if graceful shutdown takes too long
+    setTimeout(() => {
+        logger.error('Forced shutdown after timeout');
+        process.exit(1);
+    }, 10000);
 };
 
-process.on('SIGTERM', () => shutdown('SIGTERM'));
-process.on('SIGINT', () => shutdown('SIGINT'));
-
-process.on('unhandledRejection', (reason) => {
-  const error = reason instanceof Error ? reason : new Error(String(reason));
-  shutdown('UNHANDLED_REJECTION', error);
-});
-
-process.on('uncaughtException', (error) => {
-  shutdown('UNCAUGHT_EXCEPTION', error);
-});
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
