@@ -1,0 +1,10 @@
+{
+  "name": "payout-module",
+  "version": "1.0.0",
+  "description": "Reusable payout provider adapter module",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test \"tests/**/*.test.js\""
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "firebase-module",
+  "version": "1.0.0",
+  "description": "Reusable Firebase Admin initialization and token verification module",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test \"tests/**/*.test.js\""
+  }
+}

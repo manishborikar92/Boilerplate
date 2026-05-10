@@ -1,0 +1,10 @@
+{
+  "name": "storage-module",
+  "version": "1.0.0",
+  "description": "Reusable object storage adapter module",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test \"tests/**/*.test.js\""
+  }
+}
