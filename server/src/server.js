@@ -1,3 +1,4 @@
+import { pathToFileURL } from 'url';
 import createApp from './app.js';
 import config from './config/env.js';
 import { connectDatabase, disconnectDatabase } from './config/database.js';
@@ -46,7 +47,7 @@ export const startServer = async () => {
   return { app, server, shutdownManager };
 };
 
-if (import.meta.url === `file://${process.argv[1]?.replace(/\\/g, '/')}`) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   startServer().catch((error) => {
     logger.error('Failed to start server', { error });
     process.exit(1);
